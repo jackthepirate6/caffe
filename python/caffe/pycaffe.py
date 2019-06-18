@@ -19,6 +19,7 @@ os.chdir('..')
 os.chdir('..')
 os.chdir('..')
 sys.path.append('content/caffe/python/caffe')
+print(os.getcwd())
 
 
 from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
