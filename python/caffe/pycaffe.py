@@ -20,6 +20,7 @@ os.chdir('..')
 os.chdir('..')
 sys.path.append('content/caffe/python/caffe')
 
+
 from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
         RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
 #import caffe.io
