@@ -19,6 +19,7 @@ os.chdir('..')
 os.chdir('..')
 os.chdir('..')
 sys.path.append('content/caffe/python/caffe')
+print("this is current working directory")
 print(os.getcwd())
 
 
