@@ -3,18 +3,26 @@ Wrap the internal caffe C++ module (_caffe.so) with a clean, Pythonic
 interface.
 """
 
+import os
 from collections import OrderedDict
 try:
     from itertools import izip_longest
 except:
     from itertools import zip_longest as izip_longest
 import numpy as np
+import caffe.io
+import six
+
+os.chdir('..')
+os.chdir('..')
+os.chdir('..')
+os.chdir('..')
 
 from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
         RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
-import caffe.io
+#import caffe.io
 
-import six
+#import six
 
 # We directly update methods from Net here (rather than using composition or
 # inheritance) so that nets created by caffe (e.g., by SGDSolver) will
