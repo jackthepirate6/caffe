@@ -14,20 +14,6 @@ import numpy as np
 import caffe.io
 import six
 
-os.chdir('..')
-os.chdir('..')
-os.chdir('..')
-os.chdir('..')
-os.chdir('content')
-os.chdir('caffe')
-os.chdir('python')
-os.chdir('caffe')
-
-sys.path.append('/content/caffe/python/caffe')
-sys.path.append('/content/caffe/src/caffe/solvers')
-sys.path.append('/content/caffe/python/caffe/test')
-print("this is sys path ",sys.path)
-print("this is current working directory")
 print(os.getcwd())
 
 from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
