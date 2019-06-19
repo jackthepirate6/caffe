@@ -23,16 +23,18 @@ os.chdir('caffe')
 os.chdir('python')
 os.chdir('caffe')
 
-#sys.path.append('/content/caffe/python/caffe')
-#sys.path.append('/content/caffe/src/caffe/solvers')
-#sys.path.append('/content/caffe/python/caffe/test')
+sys.path.append('/content/caffe/python/caffe')
+sys.path.append('/content/caffe/src/caffe/solvers')
+sys.path.append('/content/caffe/python/caffe/test')
 print("this is sys path ",sys.path)
 print("this is current working directory")
 print(os.getcwd())
 
-
 from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
-        RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
+        RMSPropSolver, AdaDeltaSolver, AdamSolver
+
+#from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
+#        RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
 #import caffe.io
 
 #import six
