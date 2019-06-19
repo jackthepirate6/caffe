@@ -1,5 +1,8 @@
 import os
 import sys
+sys.path.append('/content/caffe/python/caffe/')
+sys.path.append('/content/caffe/python/caffe')
+
 
 os.chdir('caffe')
 os.chdir('python')
