@@ -9,15 +9,28 @@ try:
 except:
     from itertools import zip_longest as izip_longest
 import numpy as np
-
-os.getcwd()
-os.chdir('/')
-os.chdir('content')
-os.chdir('caffe')
-os.chdir('python')
-os.chdir('caffe')
-from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
+try:
+    print(os.getcwd())
+    os.chdir('/')
+    os.chdir('content')
+    os.chdir('caffe')
+    os.chdir('python')
+    os.chdir('caffe')
+    from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
         RMSPropSolver, AdaDeltaSolver, AdamSolver
+except:
+    print("relative import failed")
+
+try:
+    os.chdir('/')
+    os.chdir('content')
+    os.chdir('caffe')
+    os.chdir('python')
+    os.chdir('caffe')
+    from _caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
+        RMSPropSolver, AdaDeltaSolver, AdamSolver 
+except:
+    print("absolute import failed")
 import caffe.io
 
 import six
