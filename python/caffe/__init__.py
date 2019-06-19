@@ -10,7 +10,8 @@ try:
     from .detector import Detector
     from . import io
     from .net_spec import layers, params, NetSpec, to_proto
-except :
+except Exception as e:
+    print(e)
     print("relative import failed")
 
 try:
