@@ -28,6 +28,7 @@ try:
     from . import io
     from .net_spec import layers, params, NetSpec, to_proto
 except:
+    print(e)
     print("relative error failed second time")
     
     
