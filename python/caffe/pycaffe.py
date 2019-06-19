@@ -3,12 +3,19 @@ Wrap the internal caffe C++ module (_caffe.so) with a clean, Pythonic
 interface.
 """
 import os
+import sys
 from collections import OrderedDict
 try:
     from itertools import izip_longest
 except:
     from itertools import zip_longest as izip_longest
 import numpy as np
+sys.path.append('/content/caffe')
+sys.path.append('/content/caffe/python')
+sys.path.append('/content/caffe/python/caffe')
+sys.path.append('/content/caffe/python/caffe')
+sys.path.append('/content/caffe/src/caffe/solvers')
+
 try:
     print(os.getcwd())
     os.chdir('/')
@@ -18,7 +25,8 @@ try:
     os.chdir('caffe')
     from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
         RMSPropSolver, AdaDeltaSolver, AdamSolver
-except:
+except Exception as e:
+    print(e)
     print("relative import failed")
 
 try:
@@ -29,7 +37,8 @@ try:
     os.chdir('caffe')
     from _caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
         RMSPropSolver, AdaDeltaSolver, AdamSolver 
-except:
+except Exception as e:
+    print(e)
     print("absolute import failed")
 import caffe.io
 
