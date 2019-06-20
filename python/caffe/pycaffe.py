@@ -2,47 +2,29 @@
 Wrap the internal caffe C++ module (_caffe.so) with a clean, Pythonic
 interface.
 """
+
 import os
-import sys
+import sys 
 from collections import OrderedDict
 try:
     from itertools import izip_longest
 except:
     from itertools import zip_longest as izip_longest
 import numpy as np
-sys.path.append('/content/caffe')
-sys.path.append('/content/caffe/python')
-sys.path.append('/content/caffe/python/caffe')
-sys.path.append('/content/caffe/python/caffe')
-sys.path.append('/content/caffe/src/caffe/solvers')
-
-try:
-    print(os.getcwd())
-    os.chdir('/')
-    os.chdir('content')
-    os.chdir('caffe')
-    os.chdir('python')
-    os.chdir('caffe')
-    from ._caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
-        RMSPropSolver, AdaDeltaSolver, AdamSolver
-except Exception as e:
-    print(e)
-    print("relative import failed")
-
-try:
-    os.chdir('/')
-    os.chdir('content')
-    os.chdir('caffe')
-    os.chdir('python')
-    os.chdir('caffe')
-    from _caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
-        RMSPropSolver, AdaDeltaSolver, AdamSolver 
-except Exception as e:
-    print(e)
-    print("absolute import failed")
 import caffe.io
-
 import six
+
+os.chdir('..')
+os.chdir('..')
+os.chdir('..')
+os.chdir('..')
+sys.path.append('content/caffe/python/caffe')
+
+from .caffe import Net, SGDSolver, NesterovSolver, AdaGradSolver, \
+        RMSPropSolver, AdaDeltaSolver, AdamSolver, NCCL, Timer
+#import caffe.io
+
+#import six
 
 # We directly update methods from Net here (rather than using composition or
 # inheritance) so that nets created by caffe (e.g., by SGDSolver) will
@@ -70,6 +52,16 @@ def _Net_blob_loss_weights(self):
         self._blob_loss_weights_dict = OrderedDict(zip(self._blob_names,
                                                        self._blob_loss_weights))
     return self._blob_loss_weights_dict
+
+@property
+def _Net_layer_dict(self):
+    """
+    An OrderedDict (bottom to top, i.e., input to output) of network
+    layers indexed by name
+    """
+    if not hasattr(self, '_layer_dict'):
+        self._layer_dict = OrderedDict(zip(self._layer_names, self.layers))
+    return self._layer_dict
 
 
 @property
@@ -131,7 +123,7 @@ def _Net_forward(self, blobs=None, start=None, end=None, **kwargs):
 
     if end is not None:
         end_ind = list(self._layer_names).index(end)
-        outputs = set([end] + blobs)
+        outputs = set(self.top_names[end] + blobs)
     else:
         end_ind = len(self.layers) - 1
         outputs = set(self.outputs + blobs)
@@ -179,7 +171,7 @@ def _Net_backward(self, diffs=None, start=None, end=None, **kwargs):
 
     if end is not None:
         end_ind = list(self._layer_names).index(end)
-        outputs = set([end] + diffs)
+        outputs = set(self.bottom_names[end] + diffs)
     else:
         end_ind = 0
         outputs = set(self.inputs + diffs)
@@ -349,6 +341,7 @@ def _Net_get_id_name(func, field):
 # Attach methods to Net.
 Net.blobs = _Net_blobs
 Net.blob_loss_weights = _Net_blob_loss_weights
+Net.layer_dict = _Net_layer_dict
 Net.params = _Net_params
 Net.forward = _Net_forward
 Net.backward = _Net_backward
